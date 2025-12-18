@@ -5,7 +5,8 @@ import remarkMath from 'remark-math';
 // @ts-ignore
 import remarkMark from 'remark-mark';
 // @ts-ignore
-import remarkSupersub from 'remark-supersub';
+// @ts-ignore
+import remarkSupersub from './plugins/remark-simple-supersub';
 import remarkParse from 'remark-parse';
 import type {
 	Blockquote,
@@ -73,14 +74,16 @@ const STYLE_TO_TEMPLATE: Record<TypstStyleId, { path: string; entry: string }> =
 };
 
 export function markdownToTypst(markdown: string, options: MarkdownToTypstOptions = {}): string {
-	const tree = unified()
+	const processor = unified()
 		.use(remarkParse)
 		.use(remarkFrontmatter, ['yaml'])
-		.use(remarkGfm)
+		.use(remarkGfm, { singleTilde: false })
 		.use(remarkMath)
 		//.use(remarkMark)
-		.use(remarkSupersub)
-		.parse(markdown) as Root;
+		.use(remarkSupersub);
+
+	const parsedTree = processor.parse(markdown);
+	const tree = processor.runSync(parsedTree) as Root;
 	const definitions = collectDefinitions(tree);
 	const footnoteDefinitions = collectFootnotes(tree);
 	const frontmatter = parseFrontmatter(tree);
