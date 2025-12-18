@@ -1,39 +1,40 @@
 {
-	"name": "mdxport",
-	"private": true,
-	"version": "0.0.1",
-	"type": "module",
-	"scripts": {
-		"dev": "vite dev",
-		"build": "vite build",
-		"preview": "vite preview",
-		"prepare": "svelte-kit sync || echo ''",
-		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
-	},
-	"devDependencies": {
-		"@sveltejs/adapter-static": "^3.0.9",
-		"@sveltejs/kit": "^2.49.1",
-		"@sveltejs/vite-plugin-svelte": "^6.2.1",
-		"svelte": "^5.45.6",
-		"svelte-check": "^4.3.4",
-		"typescript": "^5.9.3",
-		"vite": "^7.2.6"
-	},
-	"dependencies": {
-		"@vercel/analytics": "^1.6.1",
-		"@myriaddreamin/typst-ts-web-compiler": "^0.6.1-rc5",
-		"@myriaddreamin/typst.ts": "^0.6.1-rc5",
-		"@types/mdast": "^4.0.4",
-		"@types/unist": "^3.0.3",
-		"mermaid": "^11.12.2",
-		"pdfjs-dist": "^5.4.449",
-		"remark-frontmatter": "^5.0.0",
-		"remark-gfm": "^4.0.1",
-		"remark-mark": "^0.0.0",
-		"remark-math": "^6.0.0",
-		"remark-parse": "^11.0.0",
-		"remark-supersub": "^1.0.0",
-		"unified": "^11.0.5"
-	}
+  "name": "mdxport",
+  "private": false,
+  "version": "0.0.1",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "vite dev",
+    "build": "vite build",
+    "preview": "vite preview",
+    "prepare": "svelte-kit sync || echo ''",
+    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
+  },
+  "devDependencies": {
+    "@sveltejs/adapter-static": "^3.0.9",
+    "@sveltejs/kit": "^2.49.1",
+    "@sveltejs/vite-plugin-svelte": "^6.2.1",
+    "svelte": "^5.45.6",
+    "svelte-check": "^4.3.4",
+    "typescript": "^5.9.3",
+    "vite": "^7.2.6"
+  },
+  "dependencies": {
+    "@vercel/analytics": "^1.6.1",
+    "@myriaddreamin/typst-ts-web-compiler": "^0.6.1-rc5",
+    "@myriaddreamin/typst.ts": "^0.6.1-rc5",
+    "@types/mdast": "^4.0.4",
+    "@types/unist": "^3.0.3",
+    "mermaid": "^11.12.2",
+    "pdfjs-dist": "^5.4.449",
+    "remark-frontmatter": "^5.0.0",
+    "remark-gfm": "^4.0.1",
+    "remark-mark": "^0.0.0",
+    "remark-math": "^6.0.0",
+    "remark-parse": "^11.0.0",
+    "remark-supersub": "^1.0.0",
+    "unified": "^11.0.5"
+  }
 }

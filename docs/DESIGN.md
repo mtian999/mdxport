@@ -1,4 +1,3 @@
-````markdown
 ---
 status: draft
 owner: formula
@@ -147,7 +146,7 @@ Preflight 不是“代码 lint”，目标是：**把草稿推到可交付状态
 
 ## 3.1 总体架构
 
-```
+```text
 UI Layer
  ├─ Editor (Markdown)
  ├─ Preflight Panel (issues + one-click fixes)
@@ -344,12 +343,3 @@ Typst 是你“分页引擎”，但不是“万能转换器”。
 
 ---
 
-```
-
-如果你下一步要进入实现，我建议你先把两份“工程级规范”写死（否则会发散）：
-1) **Markdown Profile v0.1（允许/禁止/降级规则 + 示例）**  
-2) **IR → Typst 映射规范 v0.1（每个节点怎么渲染、哪些必须模板提供、哪些必须 escape）**
-
-你要的话我可以直接把这两份规格也补齐到可开工的程度（含测试样例）。
-::contentReference[oaicite:0]{index=0}
-```

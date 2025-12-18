@@ -223,13 +223,7 @@ const worker = new Worker(
 * ✅ Worker/WASM 初始化必须 `onMount` 后进行
 * ✅ 所有 exporter 只吃 Document IR，不允许重复解析 Markdown
 
-```
 
-如果你愿意，我可以顺手把这个文档拆成两份“更能开工的”工程规格：  
-1) `Markdown Profile v0.1`（允许/禁止/降级 + 样例）  
-2) `IR → Typst 映射规范 v0.1`（逐节点渲染规则 + escape 策略 + 测试用例）
-::contentReference[oaicite:6]{index=6}
-```
 
 [1]: https://svelte.dev/docs/kit/configuration?utm_source=chatgpt.com "Configuration • SvelteKit Docs"
 [2]: https://svelte.dev/docs/kit/single-page-apps?utm_source=chatgpt.com "Single-page apps • SvelteKit Docs"

@@ -1,6 +1,14 @@
-# sv
+# mdxport
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+一个基于 Svelte 和 Typst 的 Markdown 导出工具，支持导出为高质量 PDF。
+
+## 特性
+
+- **Typst 驱动**: 利用 Typst 强大的排版能力生成 PDF。
+- **即时预览**: 编辑 Markdown 实时预览 PDF 效果。
+- **Mermaid 支持**: 集成 Mermaid 图表渲染。
+- **MathJax/Katex 支持**: 完美的数学公式支持。
+- **浏览器及离线运行**: 所有的转换都在浏览器中完成，无需后端。
 
 ## Creating a project
 
@@ -35,4 +43,6 @@ npm run build
 
 You can preview the production build with `npm run preview`.
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+## License
+
+MIT [LICENSE](LICENSE)
