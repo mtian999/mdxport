@@ -231,6 +231,37 @@ date: ${new Date().toISOString().split('T')[0]}
     },
   }
 
+  const SEO_LINKS = [
+    {
+      path: 'convert-chatgpt-table-to-pdf',
+      title: {
+        zh: 'ChatGPT 表格转 PDF',
+        en: 'ChatGPT Table to PDF',
+      },
+    },
+    {
+      path: 'notion-export-pdf-layout-fix',
+      title: {
+        zh: 'Notion 导出 PDF 修复',
+        en: 'Notion Export PDF Fix',
+      },
+    },
+    {
+      path: 'secure-offline-markdown-to-pdf-converter',
+      title: {
+        zh: '安全离线 PDF 工具',
+        en: 'Secure Offline PDF',
+      },
+    },
+    {
+      path: 'typst-online-editor-alternative',
+      title: {
+        zh: 'Typst 在线替代',
+        en: 'Typst Alternative',
+      },
+    },
+  ]
+
   // ========================================
   // State
   // ========================================
@@ -240,6 +271,22 @@ date: ${new Date().toISOString().split('T')[0]}
   let isResizing = $state(false)
   let isDragging = $state(false)
   let style = $state('modern-tech') as 'modern-tech' | 'classic-editorial'
+
+  // Mobile State
+  let activeMobileTab = $state<'editor' | 'preview'>('editor')
+  let isMenuOpen = $state(false)
+
+  function toggleMenu(e?: Event) {
+    if (e) {
+      e.stopPropagation()
+      e.preventDefault()
+    }
+    isMenuOpen = !isMenuOpen
+  }
+
+  function closeMenu() {
+    isMenuOpen = false
+  }
 
   // Derived filename
   let filename = $derived.by(() => {
@@ -386,8 +433,29 @@ date: ${new Date().toISOString().split('T')[0]}
       isLoading = false
     })
 
+    // Close menu on click outside
+    const handleClickOutside = (e: MouseEvent) => {
+      // Logic handled in click handler on window or app div
+      // simplified: if we are here, we clicked somewhere not stopping prop
+      closeMenu()
+    }
+    window.addEventListener('click', handleClickOutside)
+
+    // Debounced resize handler for auto-fit
+    let resizeTimer: number | null = null
+    const handleResize = () => {
+      if (resizeTimer) clearTimeout(resizeTimer)
+      resizeTimer = window.setTimeout(() => {
+        fitWidth()
+      }, 200)
+    }
+    window.addEventListener('resize', handleResize)
+
     return () => {
       aborted = true
+      window.removeEventListener('click', handleClickOutside)
+      window.removeEventListener('resize', handleResize)
+      if (resizeTimer) clearTimeout(resizeTimer)
       client?.dispose()
       pdfLoadTask?.destroy()
       pdfDoc?.destroy()
@@ -441,6 +509,18 @@ date: ${new Date().toISOString().split('T')[0]}
 
     return () => {
       if (autoPreviewTimer) window.clearTimeout(autoPreviewTimer)
+    }
+  })
+
+  // Auto-fit on mobile tab switch or resize
+  $effect(() => {
+    if (!browser) return
+    // Trigger when switching to preview tab
+    if (activeMobileTab === 'preview') {
+      // Small delay to ensure layout is updated (container becomes visible)
+      setTimeout(() => {
+        fitWidth()
+      }, 50)
     }
   })
 
@@ -632,6 +712,8 @@ date: ${new Date().toISOString().split('T')[0]}
     isResizing = false
     document.removeEventListener('mousemove', onResize)
     document.removeEventListener('mouseup', stopResize)
+    // Auto-fit PDF after resize
+    fitWidth()
   }
 
   // ========================================
@@ -736,42 +818,14 @@ date: ${new Date().toISOString().split('T')[0]}
   <!-- Navbar -->
   <nav class="navbar">
     <div class="navbar-left">
-      <span class="logo"><strong>MDXport</strong></span>
+      <a href="/{lang}/" class="logo-link">
+        <img src="/logo.png" alt="MDXport" class="logo-img" />
+      </a>
     </div>
     <div class="navbar-center">
       <!-- Removed filename input -->
     </div>
     <div class="navbar-right">
-      <button class="btn btn-ghost btn-sm" onclick={handleNew}>
-        {t('new')}
-      </button>
-
-      <button class="btn btn-ghost btn-sm" onclick={handleOpenFile}>
-        {lang === 'zh' ? '打开' : 'Open'}
-      </button>
-
-      <button
-        class="nav-icon btn-ghost btn-sm"
-        onclick={handleHelp}
-        title={lang === 'zh' ? '查看说明书' : 'View Guide'}
-        style="width: 32px; padding: 0;"
-      >
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <circle cx="12" cy="12" r="10"></circle>
-          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-          <line x1="12" y1="17" x2="12.01" y2="17"></line>
-        </svg>
-      </button>
-
       <select class="style-select" bind:value={style}>
         <option value="modern-tech"
           >{lang === 'zh' ? '现代风' : 'Modern'}</option
@@ -781,12 +835,34 @@ date: ${new Date().toISOString().split('T')[0]}
         >
       </select>
 
+      <!-- New Tab / Preview Button (Visible on Desktop/Tablet, Icon on Mobile) -->
       <button
-        class="btn btn-ghost btn-sm"
+        class="btn btn-ghost btn-sm btn-icon-mobile"
         onclick={openPdfNewTab}
         disabled={!pdfUrl || status === 'compiling'}
+        title={lang === 'zh' ? '在新标签页打开 PDF' : 'Open PDF in New Tab'}
       >
-        {lang === 'zh' ? '在线预览' : 'Open PDF'}
+        <span class="icon-only">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            ><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
+            ></path><polyline points="15 3 21 3 21 9"></polyline><line
+              x1="10"
+              y1="14"
+              x2="21"
+              y2="3"
+            ></line></svg
+          >
+        </span>
+        <span class="text-label">{lang === 'zh' ? '在线预览' : 'Open PDF'}</span
+        >
       </button>
 
       <button
@@ -797,39 +873,107 @@ date: ${new Date().toISOString().split('T')[0]}
         {status === 'compiling' ? t('generating') : t('export')}
       </button>
 
+      <!-- Language Switch (Restored) -->
       <button class="btn btn-ghost btn-sm" onclick={switchLang}>
         {t('langSwitch')}
       </button>
 
-      <a
-        href="mailto:cosformula@gmail.com"
-        class="nav-icon"
-        title={lang === 'zh' ? '联系我们' : 'Contact Us'}
-        aria-label="Contact"
-      >
-        <svg
-          width="18"
-          height="18"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+      <!-- Menu Button (More) -->
+      <!-- svelte-ignore a11y_click_events_have_key_events -->
+      <!-- svelte-ignore a11y_no_static_element_interactions -->
+      <div class="menu-container" onclick={(e) => e.stopPropagation()}>
+        <button
+          class="btn btn-ghost btn-sm btn-icon"
+          class:active={isMenuOpen}
+          onclick={toggleMenu}
+          aria-label="Menu"
+          style="color: var(--color-gray-900);"
         >
-          <path
-            d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
-          ></path>
-          <polyline points="22,6 12,13 2,6"></polyline>
-        </svg>
-      </a>
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="12" cy="12" r="2" fill="currentColor" stroke="none"
+            ></circle>
+            <circle cx="19" cy="12" r="2" fill="currentColor" stroke="none"
+            ></circle>
+            <circle cx="5" cy="12" r="2" fill="currentColor" stroke="none"
+            ></circle>
+          </svg>
+        </button>
+
+        {#if isMenuOpen}
+          <div class="dropdown-menu">
+            <button
+              class="menu-item"
+              onclick={() => {
+                handleNew()
+                closeMenu()
+              }}
+            >
+              <span class="menu-icon">📄</span>
+              {t('new')}
+            </button>
+
+            <button
+              class="menu-item"
+              onclick={() => {
+                handleOpenFile()
+                closeMenu()
+              }}
+            >
+              <span class="menu-icon">📂</span>
+              {lang === 'zh' ? '打开本地文件' : 'Open Local File'}
+            </button>
+
+            <button
+              class="menu-item"
+              onclick={() => {
+                handleHelp()
+                closeMenu()
+              }}
+            >
+              <span class="menu-icon">❓</span>
+              {lang === 'zh' ? '查看帮助' : 'Help & Guide'}
+            </button>
+
+            <div class="menu-divider"></div>
+
+            <a href="/{lang}/resources/" class="menu-item">
+              <span class="menu-icon">🛠️</span>
+              {lang === 'zh' ? '更多资源与工具' : 'Resources & Tools'}
+            </a>
+
+            <div class="menu-divider"></div>
+
+            <a
+              href="mailto:cosformula@gmail.com"
+              class="menu-item small"
+              title={lang === 'zh' ? '联系我们' : 'Contact Us'}
+            >
+              <span class="menu-icon">✉️</span>
+              {lang === 'zh' ? '联系我们' : 'Contact'}
+            </a>
+          </div>
+        {/if}
+      </div>
     </div>
   </nav>
 
   <!-- Workspace -->
   <main class="workspace">
     <!-- Editor Pane -->
-    <section class="pane editor-pane" style="width: {leftPaneWidth}%">
+    <section
+      class="pane editor-pane"
+      class:mobile-hidden={activeMobileTab !== 'editor'}
+      style="width: {leftPaneWidth}%"
+    >
       <textarea
         class="editor"
         bind:value={markdown}
@@ -852,8 +996,30 @@ date: ${new Date().toISOString().split('T')[0]}
       tabindex="0"
     ></div>
 
+    <!-- Mobile Tab Switcher (Visible only on mobile) -->
+    <div class="mobile-tabs">
+      <button
+        class="mobile-tab-btn"
+        class:active={activeMobileTab === 'editor'}
+        onclick={() => (activeMobileTab = 'editor')}
+      >
+        {lang === 'zh' ? '编辑' : 'Editor'}
+      </button>
+      <button
+        class="mobile-tab-btn"
+        class:active={activeMobileTab === 'preview'}
+        onclick={() => (activeMobileTab = 'preview')}
+      >
+        {lang === 'zh' ? '预览' : 'Preview'}
+      </button>
+    </div>
+
     <!-- Preview Pane -->
-    <section class="pane preview-pane" style="width: {100 - leftPaneWidth}%">
+    <section
+      class="pane preview-pane"
+      class:mobile-hidden={activeMobileTab !== 'preview'}
+      style="width: {100 - leftPaneWidth}%"
+    >
       <div class="preview-toolbar">
         <div class="pager">
           <button
@@ -932,14 +1098,22 @@ date: ${new Date().toISOString().split('T')[0]}
     gap: var(--space-xs);
   }
 
-  .navbar-right .btn {
+  .navbar-right > .btn {
     padding-left: var(--space-md);
     padding-right: var(--space-md);
   }
 
-  .logo {
-    font-size: 1rem;
-    letter-spacing: -0.02em;
+  .logo-link {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    text-decoration: none;
+  }
+
+  .logo-img {
+    height: 48px;
+    width: auto;
+    display: block;
   }
 
   .nav-icon {
@@ -1084,5 +1258,185 @@ date: ${new Date().toISOString().split('T')[0]}
   :global(.pdfViewer .page) {
     margin: 0 auto var(--space-md);
     box-shadow: var(--paper-shadow);
+  }
+
+  /* ========================================
+     Mobile Layout
+     ======================================== */
+  /* ========================================
+     Menu
+     ======================================== */
+  .menu-container {
+    position: relative;
+    display: inline-block;
+  }
+
+  .btn-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+  }
+
+  .dropdown-menu {
+    position: absolute;
+    top: calc(100% + 4px);
+    right: 0;
+    width: 200px;
+    background: var(--color-white);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-md);
+    z-index: 1000;
+    padding: var(--space-xs) 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .menu-item {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: var(--space-xs) var(--space-sm);
+    font-size: 0.8125rem;
+    color: var(--color-gray-700);
+    background: transparent;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color var(--transition-fast);
+  }
+
+  .menu-item:hover {
+    background-color: var(--color-gray-50);
+    color: var(--color-gray-900);
+  }
+
+  .menu-item:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .menu-item.small {
+    font-size: 0.75rem;
+    padding: 4px var(--space-sm);
+  }
+
+  .menu-icon {
+    margin-right: var(--space-sm);
+    font-size: 1rem;
+    line-height: 1;
+  }
+
+  .menu-divider {
+    height: 1px;
+    background: var(--color-gray-100);
+    margin: var(--space-xs) 0;
+  }
+
+  .menu-label {
+    padding: 4px var(--space-sm);
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    color: var(--color-gray-400);
+    font-weight: 500;
+  }
+
+  /* ========================================
+    Mobile Layout
+    ======================================== */
+  .mobile-tabs {
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    .app {
+      height: 100dvh; /* Use dynamic viewport height for mobile */
+    }
+
+    .navbar {
+      padding: 0 var(--space-sm);
+    }
+
+    .logo {
+      font-size: 0.875rem;
+    }
+
+    .menu-container {
+      /* Ensure menu doesn't go off screen if needed, though right-0 handles it */
+    }
+
+    /* Remove specific footer mobile styles as footer is gone */
+
+    /* Hide non-essential buttons on very small screens if needed, 
+       but for now let's just make them smaller or rely on overflow scrolling if needed. */
+
+    .workspace {
+      flex-direction: column;
+      position: relative;
+    }
+
+    .pane {
+      width: 100% !important; /* Force full width */
+      height: 100%;
+      position: absolute; /* Stack them */
+      inset: 0;
+      z-index: 1;
+      padding-bottom: 50px; /* Space for mobile tabs */
+    }
+
+    .pane.mobile-hidden {
+      display: none; /* simple hide */
+      z-index: 0;
+    }
+
+    .resizer {
+      display: none;
+    }
+
+    /* Mobile Tabs */
+    .mobile-tabs {
+      display: flex;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 50px;
+      background: var(--color-white);
+      border-top: 1px solid var(--color-gray-200);
+      z-index: 100;
+    }
+
+    .mobile-tab-btn {
+      flex: 1;
+      border: none;
+      background: transparent;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--color-gray-500);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .mobile-tab-btn.active {
+      color: var(--color-gray-900);
+      background: var(--color-gray-50);
+    }
+
+    .mobile-tab-btn.active::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--color-gray-900);
+    }
   }
 </style>
