@@ -1157,6 +1157,14 @@ date: ${new Date().toISOString().split('T')[0]}
   // ========================================
   // Functions
   // ========================================
+  function goToPage(nextPage: number) {
+    if (!pdfDoc || !pdfViewer) return
+    const clamped = Math.max(1, Math.min(nextPage, pdfPages || 1))
+    if (clamped === pdfPage) return
+    pdfPage = clamped
+    pdfViewer.currentPageNumber = clamped
+  }
+
   async function compile(md: string, nextStyle: typeof style, docLang: UILang) {
     if (!client) return
     hasEverCompiled = true
@@ -1813,12 +1821,12 @@ date: ${new Date().toISOString().split('T')[0]}
         <div class="preview-status-wrapper">
           <div class="pager">
             <button
-              onclick={() => pdfPage > 1 && (pdfPage -= 1)}
+              onclick={() => goToPage(pdfPage - 1)}
               disabled={!pdfDoc || pdfPage <= 1}>←</button
             >
             <span class="page-info">{pdfPage} / {pdfPages || '—'}</span>
             <button
-              onclick={() => pdfPages && pdfPage < pdfPages && (pdfPage += 1)}
+              onclick={() => goToPage(pdfPage + 1)}
               disabled={!pdfDoc || pdfPage >= pdfPages}>→</button
             >
           </div>
