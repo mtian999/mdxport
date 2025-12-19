@@ -1472,7 +1472,7 @@ date: ${new Date().toISOString().split('T')[0]}
         href="https://github.com/cosformula/mdxport"
         target="_blank"
         rel="noopener noreferrer"
-        class="nav-icon"
+        class="nav-icon hidden-mobile"
         title="View on GitHub"
       >
         <svg
@@ -1543,7 +1543,7 @@ date: ${new Date().toISOString().split('T')[0]}
       </button>
 
       <!-- Language Switch (Restored) -->
-      <button class="btn btn-ghost btn-sm" onclick={switchLang}>
+      <button class="btn btn-ghost btn-sm hidden-mobile" onclick={switchLang}>
         {t('langSwitch')}
       </button>
 
@@ -1589,6 +1589,23 @@ date: ${new Date().toISOString().split('T')[0]}
             >
               <span class="menu-icon">🌐</span>
               {lang === 'zh' ? '在新页预览 PDF' : 'Preview PDF in New Tab'}
+            </button>
+
+            <a
+              href="https://github.com/cosformula/mdxport"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="menu-item show-mobile"
+            >
+              <span class="menu-icon">🐙</span>
+              GitHub
+            </a>
+
+            <button class="menu-item show-mobile" onclick={switchLang}>
+              <span class="menu-icon">🌐</span>
+              {t('langSwitch') === '中'
+                ? 'Switch to Chinese'
+                : 'Switch to English'}
             </button>
 
             <button
@@ -1922,12 +1939,28 @@ date: ${new Date().toISOString().split('T')[0]}
   }
 
   .style-select {
-    padding: 0.375rem 0.5rem;
+    appearance: none;
+    -webkit-appearance: none;
+    padding: calc(0.5rem - 1px) 2rem calc(0.5rem - 1px) 0.875rem; /* Subtract 1px padding to account for 1px border */
     font-size: 0.8125rem;
-    background: var(--color-gray-50);
+    font-weight: 500; /* Match btn font-weight */
+    font-family: var(--font-mono);
+    line-height: 1;
+    background-color: var(--color-gray-50);
+    /* SVG URL encoded arrow */
+    background-image: url("data:image/svg+xml,%3Csvg width='12' height='12' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 9L12 15L18 9' stroke='%23737373' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1rem;
     border: 1px solid var(--color-gray-200);
     border-radius: var(--radius-sm);
     cursor: pointer;
+    box-sizing: border-box;
+  }
+
+  .style-select:hover {
+    background-color: var(--color-gray-100);
+    border-color: var(--color-gray-300);
   }
 
   /* ========================================
