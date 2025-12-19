@@ -71,6 +71,15 @@
   )
   show raw: set text(font: ("DejaVu Sans Mono",))
 
+  // 7) 表格样式：经典边框
+  set table(
+    stroke: (paint: luma(150), thickness: 0.8pt),
+    inset: 7pt,
+    fill: (x, y) => if y == 0 { luma(240) } else { none },
+  )
+  show table: set par(justify: false, first-line-indent: 0pt, spacing: 0.5em)
+  show table.cell.where(y: 0): set text(weight: "bold")
+
   // 标题区（可选）
   if title != "" {
     align(center)[

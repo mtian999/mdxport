@@ -6,9 +6,9 @@
 
   const SEO = {
     zh: {
-      title: '安全离线 Markdown 转 PDF 工具 (隐私保护) - MDXport',
+      title: '安全离线 Markdown 转 PDF: 本地优先，无数据上传风险 - MDXport',
       description:
-        '无需上传数据到服务器。MDXport 使用 WebAssembly 技术在您的浏览器中本地运行，为您提供 100% 安全的文档转换服务。企业级隐私保护。',
+        '专注于隐私保护的 Markdown 转换工具。MDXport 使用 WebAssembly 在浏览器本地运行，避免敏感文档上传到服务器，保障您的数据安全。',
       content: `
 # 安全、离线的 Markdown 转 PDF 工具
 
@@ -48,9 +48,9 @@ MDXport 采用了最先进的 **WebAssembly (WASM)** 技术，将排版引擎直
     },
     en: {
       title:
-        'Secure Offline Markdown to PDF Converter (Privacy First) - MDXport',
+        'Secure Offline Markdown to PDF: 100% Privacy, Zero Data Upload - MDXport',
       description:
-        'No data upload required. MDXport runs locally in your browser using WebAssembly. The safest way to convert confidental Markdown documents to PDF.',
+        'No data upload required. MDXport runs locally in your browser using WebAssembly. The safest way to convert confidential contracts and sensitive documents to PDF, even offline.',
       content: `
 # Secure, Offline Markdown to PDF
 

@@ -6,13 +6,13 @@
 
   const SEO = {
     zh: {
-      title: 'ChatGPT 表格转 PDF 完美排版工具 - MDXport',
+      title: 'ChatGPT 表格转 PDF: 更专业的排版优化工具 - MDXport',
       description:
-        '还在为 ChatGPT 生成的表格复制到 Word 格式乱掉而发愁？使用 MDXport，一键将 ChatGPT 对话转换为排版精美的 PDF 文档。',
+        '尝试解决从 ChatGPT 复制表格到 Word 格式不一致的问题。MDXport 针对常用 Markdown 格式优化，辅助将对话表格转换为排版整洁的 PDF 文档。',
       content: `
 # ChatGPT 表格转 PDF
 
-你是否经常遇到这样的问题：**从 ChatGPT 复制表格到 Word 或 Excel，格式完全乱掉？**
+你是否经常遇到这样的问题：**从 ChatGPT 复制表格到 Word 或 Excel，格式容易出现错乱？**
 
 MDXport 专为解决这个问题而生。
 
@@ -20,7 +20,7 @@ MDXport 专为解决这个问题而生。
 
 | 问题 | 传统方法 (Word/Excel) | MDXport |
 | :--- | :--- | :--- |
-| **表格边框** | 经常丢失或错位 | ✅ 完美保留 |
+| **表格边框** | 有时丢失或错位 | ✅ 倾向于保留 |
 | **长表格** | 这是一个长表格的截断问题 | ✅ 自动分页、自动调整列宽 |
 | **复合内容** | 文本与表格混合排版困难 | ✅ 像写文章一样自然 |
 
@@ -42,7 +42,8 @@ MDXport 专为解决这个问题而生。
 `,
     },
     en: {
-      title: 'Convert ChatGPT Table to PDF with Perfect Formatting - MDXport',
+      title:
+        'Convert ChatGPT Table to PDF: Professional Layout Optimization - MDXport',
       description:
         'Struggling with broken formatting when copying ChatGPT tables to Word? Use MDXport to convert ChatGPT conversations into beautifully formatted PDFs in one click.',
       content: `
@@ -56,7 +57,7 @@ MDXport is built to solve this.
 
 | Issue | Traditional (Word/Excel) | MDXport |
 | :--- | :--- | :--- |
-| **Borders** | Often missing or misaligned | ✅ Perfectly preserved |
+| **Borders** | May be missing or misaligned | ✅ Better preservation |
 | **Long Tables** | Cut off or overflows page | ✅ Auto-pagination & column sizing |
 | **Mixed Content** | Hard to mix text & tables | ✅ Natural document flow |
 

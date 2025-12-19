@@ -6,13 +6,13 @@
 
   const SEO = {
     zh: {
-      title: 'Notion 导出 PDF 排版修复工具 - MDXport',
+      title: 'Notion 导出 PDF 优化: 改善表格截断与布局挑战 - MDXport',
       description:
-        'Notion 导出的 PDF 表格被截断？图片位置错乱？MDXport 帮你一键修复 Notion 导出 Markdown 后的所有排版问题，生成完美的 PDF。',
+        'Notion 导出的 PDF 可能遇到表格被截断或布局不理想的情况。MDXport 尝试通过 Markdown 转换来优化排版，辅助自动调整表格宽度，100% 本地运行。',
       content: `
 # 修复 Notion 导出 PDF 排版问题
 
-Notion 是一个很棒的笔记工具，但它的 **PDF 导出功能简直是灾难**。
+Notion 是一个很棒的笔记工具，但它的 **PDF 导出在某些场景下仍有挑战**。
 
 你是否遇到过：
 - ❌ 表格太宽被直接截断
@@ -22,7 +22,7 @@ Notion 是一个很棒的笔记工具，但它的 **PDF 导出功能简直是灾
 
 ## 解决方案：导出 Markdown + MDXport
 
-不要直接导出 PDF。请尝试以下流程，获得完美结果：
+不要直接导出 PDF。请尝试以下流程，获得更可控的结果：
 
 1. 在 Notion 中点击右上角 \`...\` -> \`Export\`
 2. 选择格式为 **Markdown & CSV**
@@ -50,13 +50,13 @@ MDXport 的智能引擎会自动处理 Notion Markdown 的特有怪癖：
 `,
     },
     en: {
-      title: 'Fix Notion PDF Export Layout Issues (Tables, Images) - MDXport',
+      title: 'Improve Notion PDF Export: Better Table Layouts - MDXport',
       description:
-        'Notion PDF export cutting off your tables? Layout broken? Export to Markdown and use MDXport to generate a perfectly formatted PDF instantly.',
+        'Notion PDF export can sometimes cut off tables. Export to Markdown and let MDXport help generate a PDF with more flexible table widths and pagination.',
       content: `
 # Fix Notion PDF Export Layout Issues
 
-Notion is great, but its **PDF export is often a disaster**.
+Notion is great, but its **PDF export can sometimes be challenging for complex layouts**.
 
 Common issues:
 - ❌ Tables cut off at the page edge

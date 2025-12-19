@@ -53,7 +53,17 @@
 </script>
 
 <svelte:head>
-  <title>{lang === 'zh' ? '资源工具 - MDXport' : 'Resources - MDXport'}</title>
+  <title
+    >{lang === 'zh'
+      ? '资源与工具 - MDXport: 专业的 Markdown 转 PDF 解决方案'
+      : 'Resources & Tools - MDXport: Professional Markdown to PDF Solutions'}</title
+  >
+  <meta
+    name="description"
+    content={lang === 'zh'
+      ? '发现更多提高效率的文档工具和解决方案。MDXport 提供 ChatGPT 表格转 PDF、Notion 布局修复等多种实用工具。'
+      : 'Discover tools and solutions to boost your productivity. MDXport provides ChatGPT table to PDF, Notion layout fixes, and more.'}
+  />
 </svelte:head>
 
 <div class="resources-page">

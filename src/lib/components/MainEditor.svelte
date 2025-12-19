@@ -40,24 +40,42 @@ authors:
 date: ${new Date().toISOString().split('T')[0]}
 ---
 
-# 欢迎使用 MDXport
+# 将原始 Markdown 和 AI 草稿转化为专业级 PDF
 
-*试着修改这段文字，右侧会实时更新...*
+### 您 LLM 输出与专业报告之间更近的一步
+MDXport 旨在提供稳定的分页、尝试自动修复常见的格式错误并为品牌规范提供支持——100% 在您的浏览器本地运行。
 
-## 核心亮点
+- **工程级分页**：表格表头尝试自动重复、处理标题孤行、智能换页建议。
+- **主动预检**：检测并提示损坏的数学块、溢出的代码块和常见的嵌套问题。
+- **确定性构建**：相同的输入 + 锁定的模板/引擎版本 = 每次都是完全相同的 PDF。
+- **本地优先安全**：您的商业机密永远不会离开您的设备。
 
-| 特性 | 说明 |
+[ 立即尝试 → ](https://mdxport.com) &nbsp; [ 查看项目 · GitHub ](https://github.com/cosformula/mdxport)
+
+*由 WASM 驱动。可验证、可重现。*
+
+---
+
+### 3 个核心 Feature 卡片
+
+#### 1. 拯救导出的预检 (Active Preflight & Verification)
+AI 生成的 Markdown 通常在“视觉上没问题”但“结构上不完整”。MDXport 充当预检工具：它尝试在导出前检测不匹配的定界符或错误嵌套、提示溢出的代码块，并正确处理常见的 LaTeX 数学语法。
+
+#### 2. 是排版逻辑，而非简单的“打印到 PDF” (Smart Paging & Navigation)
+浏览器并不擅长打印。MDXport 处理最棘手的部分：跨页自动重复表格表头、防止标题单独出现在页面底部（孤立行）、并自动生成完全可点击的目录 (TOC) 和 PDF 书签结构。
+
+#### 3. 可扩展的品牌化 (Design Tokens & Branding) - 敬请期待
+不要让您的团队弄乱字体。未来，您将可以使用锁定且带版本的模板。添加机密水印、自定义页眉/页脚，并定义您自己的品牌 Token (theme.json) 以完美匹配您的形象。
+
+---
+
+### 为什么不是 Pandoc / Notion / Typora？
+
+| 工具 | 优劣对比 |
 | :--- | :--- |
-| **隐私优先** | 基于 WASM 技术，所有数据都在浏览器本地处理，绝不上传服务器 |
-| **智能修复** | 自动修复 AI 生成的 Markdown 排版问题：表格溢出、层级混乱、格式错误 |
-| **商务排版** | 内置思源宋体等中文字体，专业文档一键生成，所见即所得 |
-| **即开即用** | 无需安装、无需登录，打开网页直接使用 |
-
-## 快速开始
-
-1. 粘贴你的 **ChatGPT / Claude** 草稿到左侧编辑器
-2. 观察右侧预览，排版问题会被自动修正
-3. 点击右上角 **"导出 PDF"** 下载文档
+| **Pandoc** | **学术界的金标准，但配置是噩梦。** <br> Pandoc 功能强大，但通常需要手动安装二进制环境、数 GB 的 LaTeX 工具链，并调试晦涩的模板错误。**MDXport 的不同之处**：零配置，无需安装工具链；视觉反馈，实时查看预检问题。 |
+| **Notion** | **非常适合 Wiki，但在导出为固定格式时有局限性。** <br> Notion 文档是“流式”的，针对屏幕阅读优化，直接导出 PDF 有时会遇到宽表格截断等挑战。**MDXport 的尝试**：提供固定布局选项，针对 A4 打印优化；Git 友好，保持源码为 Markdown。 |
+| **Typora** | **优秀的编辑器，偏向个人写作体验。** <br> Typora 为写作而生，而非流水线发布。PDF 输出结果可能受到本地 CSS 样式和特定排版配置的影响。**MDXport 的不同之处**：致力于提供 100% 可重现的流程；关注团队一致性，无论 OS 如何，力求提供统一的边距和布局。 |
 
 ---
 
@@ -117,23 +135,48 @@ authors:
 date: ${new Date().toISOString().split('T')[0]}
 ---
 
-# Welcome to MDXport
+# Turn Raw Markdown & AI Drafts into Client-Ready PDFs.
 
-*Try editing this text — the preview updates in real-time...*
+### A better bridge between LLM output and professional reports.
+MDXport aims for stable pagination, attempts to catch common formatting errors, and provides a path for branding—running 100% locally in your browser.
 
-## Key Features
+- **Engineered Pagination**: Strives for repeating table headers, orphan prevention, and smart breaks.
+- **Active Preflight**: Detects & flags common math block issues, overflowing code, and bad nesting.
+- **Reproducible Output**: Same input + Pinned template/engine versions = Same PDF.
+- **Local-First Security**: Your commercial specs never leave your device.
 
-|Feature|Description|
-|:---|:---|
-|**Privacy First**|Powered by WASM, all processing happens locally in your browser. No data upload.|
-|**Smart Cleanup**|Auto-fix AI-generated Markdown issues: table overflow, broken hierarchy, formatting errors|
-|**Pro Typesetting**|Built-in professional fonts, business-ready documents, what you see is what you get|
-|**Zero Setup**|No installation, no login required. Just open and use.|
+[ Try in the browser → ](https://mdxport.com) &nbsp; [ View Project · GitHub ](https://github.com/cosformula/mdxport)
 
-## Quick Start
-1. Paste your **ChatGPT / Claude** draft into the left editor
-2. Watch the right panel — formatting issues are auto-corrected
-3. Click **"Export PDF"** in the top-right corner to download
+*Powered by WASM. Deterministic & reproducible.*
+
+---
+
+### Core Features
+
+#### 1. Preflight for better exports
+**Active Preflight & Verification**
+
+AI-generated Markdown is often "visually okay" but "structurally broken." MDXport acts as a preflight tool: it attempts to detect mismatched delimiters & invalid nesting, flags overflowing code blocks, and renders most LaTeX-style math in Markdown correctly.
+
+#### 2. Layout logic, not just "Print to PDF"
+**Smart Paging & Navigation**
+
+Browsers are bad at printing. MDXport handles the hard stuff: repeating table headers across pages, preventing headings from sitting alone at the bottom of a page (orphans), and generating a fully clickable TOC + PDF Bookmarks structure automatically.
+
+#### 3. Branding that scales (Coming Soon)
+**Design Tokens & Branding**
+
+Don’t let your team mess up the fonts. In the future, you will be able to use locked, versioned templates for PRDs, Contracts, or Research. Add confidentiality watermarks, custom headers/footers, and bring your own design tokens (theme.json) to match your brand identity perfectly.
+
+---
+
+### Why not Pandoc / Notion / Typora?
+
+| Tool | Comparison |
+| :--- | :--- |
+| **Pandoc** | **The gold standard for academics, but a nightmare to configure.** <br> Pandoc is powerful, but usually requires manual installation of binaries, LaTeX toolchains, and debugging obscure template errors. **MDXport difference**: Zero Setup, Visual Feedback, Modern Defaults. |
+| **Notion** | **Great for wikis, but has limitations for frozen deliverables.** <br> Notion documents are "fluid"—optimized for screens. Directly exporting to PDF can sometimes encounter challenges with ultra-wide tables. **MDXport's approach**: Fixed Layout, Repo-Friendly, Local-First. |
+| **Typora** | **Excellent editor, focused on personal writing experience.** <br> Typora is designed for writing, not automated publishing pipelines. PDF output can vary based on local CSS themes and specific configurations. **MDXport difference**: Aims for a 100% reproducible pipeline; team consistency across OS with unified margins and fonts. |
 
 ---
 

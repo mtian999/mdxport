@@ -81,6 +81,15 @@
   )
   show raw: set text(font: ("JetBrains Mono", "Fira Code", "Consolas", "DejaVu Sans Mono"))
 
+  // 9) 表格样式：交替行背景 + 灰色表头
+  set table(
+    stroke: (paint: luma(200), thickness: 0.5pt),
+    inset: 8pt,
+    fill: (x, y) => if y == 0 { rgb("#444444") } else { none },
+  )
+  show table: set par(justify: false, spacing: 0.6em)
+  show table.cell.where(y: 0): set text(weight: "bold", fill: white)
+
   // 标题区（可选）
   if title != "" {
     align(center)[

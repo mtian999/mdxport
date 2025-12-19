@@ -450,23 +450,21 @@ function renderTable(
 	const aligns = (node.align ?? []).map((a) => alignMap[a ?? 'left'] ?? 'left');
 
 	// Build column specification
-	const columns = Array(colCount).fill('auto').join(', ');
+	const columns = Array(colCount).fill('1fr').join(', ');
 
 	// Build table content
-	const cells: string[] = [];
-
-	// Header row (first row) - render as bold
+	const headerCells: string[] = [];
 	for (const cell of headerRow.children as TableCell[]) {
 		const content = renderInlines(cell.children, definitions, footnoteDefinitions);
-		cells.push(`[*${content}*]`);
+		headerCells.push(`[*${content}*]`);
 	}
 
-	// Data rows
+	const dataCells: string[] = [];
 	for (let i = 1; i < rows.length; i++) {
 		const row = rows[i];
 		for (const cell of row.children as TableCell[]) {
 			const content = renderInlines(cell.children, definitions, footnoteDefinitions);
-			cells.push(`[${content}]`);
+			dataCells.push(`[${content}]`);
 		}
 	}
 
@@ -477,7 +475,8 @@ function renderTable(
 		`#table(`,
 		`  columns: (${columns}),`,
 		`  align: (${alignArgs}),`,
-		`  ${cells.join(', ')}`,
+		`  table.header(${headerCells.join(', ')}),`,
+		`  ${dataCells.join(', ')}`,
 		`)`
 	];
 

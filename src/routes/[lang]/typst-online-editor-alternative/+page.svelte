@@ -6,9 +6,9 @@
 
   const SEO = {
     zh: {
-      title: '免费 Typst 在线编辑器替代方案 - MDXport',
+      title: 'Typst 在线编辑器替代方案: 基于 Markdown 的文档排版工具 - MDXport',
       description:
-        '觉得官方 Typst Web App 太慢？或者不想注册账号？MDXport 提供了一个基于 Markdown 的轻量级 Typst 替代方案。所见即所得，无需学习复杂语法。',
+        '提供比官方 Typst 更易上手的在线替代方案。MDXport 利用 Markdown 语法输出专业级 PDF。无需学习语法，无需注册，本地极速渲染。',
       content: `
 # 免费 Typst 在线编辑器替代方案
 
@@ -51,9 +51,10 @@ $ E = mc^2 $
 `,
     },
     en: {
-      title: 'Free Typst Online Editor Alternative - MDXport',
+      title:
+        'Typst Online Editor Alternative: Markdown-Powered Typesetting - MDXport',
       description:
-        'Find the official Typst Web App too complex? MDXport offers a lightweight, Markdown-based alternative. No sign-up, instant preview, professional results.',
+        'Find the official Typst Web App too complex? MDXport offers a lightweight, Markdown-based alternative. No sign-up, instant local preview, and professional results without learning new code.',
       content: `
 # Free Typst Online Editor Alternative
 
