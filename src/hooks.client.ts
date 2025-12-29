@@ -1,3 +1,3 @@
-import { injectAnalytics } from '@vercel/analytics/sveltekit'
+// import { injectAnalytics } from '@vercel/analytics/sveltekit'
 
-injectAnalytics()
+// injectAnalytics()
