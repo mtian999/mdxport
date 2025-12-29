@@ -1,4 +1,7 @@
 /// <reference lib="webworker" />
+/// Input: 接收 TypstWorkerClient 发来的编译请求与远程字体资源。
+/// Output: 返回 PDF 编译结果与诊断信息供前端展示。
+/// Pos: 浏览器 Worker 端 Typst 编译核心；一旦更新需同步目录说明文档。
 
 import {
   createTypstCompiler,
@@ -38,28 +41,41 @@ const ctx: DedicatedWorkerGlobalScope =
 let compilerPromise: Promise<TypstCompiler> | null = null;
 let compileQueue: Promise<void> = Promise.resolve();
 
+const GH_PROXY = "https://mirror.ghproxy.com/";
+const fromRawGh = (path: string) =>
+  `${GH_PROXY}https://raw.githubusercontent.com/${path}`;
+const fromRepoRaw = (path: string) => `${GH_PROXY}https://github.com/${path}`;
+
 const CORE_FONTS: string[] = [
   // IBM Plex Sans (Modern UI) - Part of typst-dev-assets
-  "https://raw.githubusercontent.com/typst/typst-dev-assets/v0.13.1/files/fonts/IBMPlexSans-Regular.ttf",
-  "https://raw.githubusercontent.com/typst/typst-dev-assets/v0.13.1/files/fonts/IBMPlexSans-Bold.ttf",
+  fromRawGh(
+    "typst/typst-dev-assets/v0.13.1/files/fonts/IBMPlexSans-Regular.ttf"
+  ),
+  fromRawGh("typst/typst-dev-assets/v0.13.1/files/fonts/IBMPlexSans-Bold.ttf"),
 
   // Math font (Critical for mathematical formulas) - Part of typst-assets
-  "https://raw.githubusercontent.com/typst/typst-assets/v0.13.1/files/fonts/NewCMMath-Regular.otf",
-  "https://raw.githubusercontent.com/typst/typst-assets/v0.13.1/files/fonts/NewCMMath-Book.otf",
+  fromRawGh("typst/typst-assets/v0.13.1/files/fonts/NewCMMath-Regular.otf"),
+  fromRawGh("typst/typst-assets/v0.13.1/files/fonts/NewCMMath-Book.otf"),
 ];
 
 const CJK_FONTS: string[] = [
   // Sans CJK (Simplified Chinese) - Noto Sans CJK SC (~15MB)
-  "https://github.com/notofonts/noto-cjk/raw/main/Sans/OTF/SimplifiedChinese/NotoSansCJKsc-Regular.otf",
-  "https://github.com/notofonts/noto-cjk/raw/main/Sans/OTF/SimplifiedChinese/NotoSansCJKsc-Bold.otf",
+  fromRepoRaw(
+    "notofonts/noto-cjk/raw/main/Sans/OTF/SimplifiedChinese/NotoSansCJKsc-Regular.otf"
+  ),
+  fromRepoRaw(
+    "notofonts/noto-cjk/raw/main/Sans/OTF/SimplifiedChinese/NotoSansCJKsc-Bold.otf"
+  ),
 
   // Serif CJK (Simplified Chinese) - Noto Serif SC (~14MB)
-  "https://github.com/notofonts/noto-serif-sc/raw/main/fonts/otf/NotoSerifSC-Regular.otf",
+  fromRepoRaw(
+    "notofonts/noto-serif-sc/raw/main/fonts/otf/NotoSerifSC-Regular.otf"
+  ),
 ];
 
 const EMOJI_FONTS: string[] = [
   // Emoji font (Noto Color Emoji) (~9MB)
-  "https://github.com/notofonts/noto-emoji/raw/main/fonts/NotoColorEmoji.ttf",
+  fromRepoRaw("notofonts/noto-emoji/raw/main/fonts/NotoColorEmoji.ttf"),
 ];
 
 let cjkLoaded = false;
