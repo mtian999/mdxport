@@ -1,4 +1,5 @@
 /// <reference lib="webworker" />
+/// <reference lib="es2015" />
 
 import {
   createTypstCompiler,
@@ -40,26 +41,26 @@ let compileQueue: Promise<void> = Promise.resolve();
 
 const CORE_FONTS: string[] = [
   // IBM Plex Sans (Modern UI) - Part of typst-dev-assets
-  "https://raw.githubusercontent.com/typst/typst-dev-assets/v0.13.1/files/fonts/IBMPlexSans-Regular.ttf",
-  "https://raw.githubusercontent.com/typst/typst-dev-assets/v0.13.1/files/fonts/IBMPlexSans-Bold.ttf",
+  "https://fastly.jsdelivr.net/gh/typst/typst-dev-assets@v0.13.1/files/fonts/IBMPlexSans-Regular.ttf",
+  "https://fastly.jsdelivr.net/gh/typst/typst-dev-assets@v0.13.1/files/fonts/IBMPlexSans-Bold.ttf",
 
   // Math font (Critical for mathematical formulas) - Part of typst-assets
-  "https://raw.githubusercontent.com/typst/typst-assets/v0.13.1/files/fonts/NewCMMath-Regular.otf",
-  "https://raw.githubusercontent.com/typst/typst-assets/v0.13.1/files/fonts/NewCMMath-Book.otf",
+  "https://fastly.jsdelivr.net/gh/typst/typst-assets@v0.13.1/files/fonts/NewCMMath-Regular.otf",
+  "https://fastly.jsdelivr.net/gh/typst/typst-assets@v0.13.1/files/fonts/NewCMMath-Book.otf",
 ];
 
 const CJK_FONTS: string[] = [
   // Sans CJK (Simplified Chinese) - Noto Sans CJK SC (~15MB)
-  "https://github.com/notofonts/noto-cjk/raw/main/Sans/OTF/SimplifiedChinese/NotoSansCJKsc-Regular.otf",
-  "https://github.com/notofonts/noto-cjk/raw/main/Sans/OTF/SimplifiedChinese/NotoSansCJKsc-Bold.otf",
+  "https://fastly.jsdelivr.net/gh/notofonts/noto-cjk@main/Sans/OTF/SimplifiedChinese/NotoSansCJKsc-Regular.otf",
+  "https://fastly.jsdelivr.net/gh/notofonts/noto-cjk@main/Sans/OTF/SimplifiedChinese/NotoSansCJKsc-Bold.otf",
 
   // Serif CJK (Simplified Chinese) - Noto Serif SC (~14MB)
-  "https://github.com/notofonts/noto-serif-sc/raw/main/fonts/otf/NotoSerifSC-Regular.otf",
+  "https://fastly.jsdelivr.net/gh/notofonts/noto-serif-sc@main/fonts/otf/NotoSerifSC-Regular.otf",
 ];
 
 const EMOJI_FONTS: string[] = [
   // Emoji font (Noto Color Emoji) (~9MB)
-  "https://github.com/notofonts/noto-emoji/raw/main/fonts/NotoColorEmoji.ttf",
+  "https://fastly.jsdelivr.net/gh/notofonts/noto-emoji@main/fonts/NotoColorEmoji.ttf",
 ];
 
 let cjkLoaded = false;
